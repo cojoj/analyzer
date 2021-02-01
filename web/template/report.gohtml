@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Analysis report</h1>
+
+<h4>URL: <a href="{{.URL}}">{{.URL}}</a></h4>
+<h4>DTD: {{.DTD}}</h4>
+<h4>Title: {{.Title}}</h4>
+<h4>Contains login form: {{.ContainsLoginForm}}</h4>
+
+<h4>Headings:</h4>
+<table>
+    <tr>
+        <th>Level</th>
+        <th>Amount</th>
+    </tr>
+    {{range .Headings}}
+    <tr>
+        <td>{{.Level}}</td>
+        <td>{{.Amount}}</td> 
+    </tr>
+    {{end}}
+</table>
+
+<h4>Links:</h4>
+<table>
+    <tr>
+        <th>#</th>
+        <th>URL</th>
+        <th>No. Occurrences</th>
+        <th>Internal</th>
+        <th>Reachable (Status Code)</th>
+    </tr>
+    {{range $index, $element := .Links}}
+    <tr>
+        <td>{{$index | increment}}</td> 
+        <td><a href="{{.URL}}">{{$element.URL}}</a></td> 
+        <td>{{$element.Count}}</td>
+        <td>{{$element.Internal}}</td>
+        <td>{{$element.Status.Reachable}} ({{$element.Status.StatusCode}})</td>
+    </tr>
+    {{end}}
+</table>
+
+</body>
+</html>
